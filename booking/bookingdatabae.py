@@ -1,5 +1,7 @@
 import sys
 import mysql.connector
+from booking.Connect import *
+import Global
 
 
 def connect():
@@ -11,10 +13,10 @@ def connect():
     finally:
        return conn
 
-def bookings(pickupaddress,dropaddress,pickuptime,pickupdate):
+def bookings(pickupaddress,dropaddress,pickuptime,pickupdate,cid):
     conn = None
-    sql = """INSERT INTO allbooking (pickupaddress,dropaddress,pickuptime,pickupdate,Status) VALUES (%s, %s, %s,%s,"Pending")"""
-    values = (pickupaddress,dropaddress,pickuptime,pickupdate)
+    sql = """INSERT INTO allbooking (pickupaddress,dropaddress,pickuptime,pickupdate,Status,cid) VALUES (%s, %s, %s,%s,"Pending",%s)"""
+    values = (pickupaddress,dropaddress,pickuptime,pickupdate,cid)
     try:
 
         conn = connect()
@@ -31,7 +33,29 @@ def bookings(pickupaddress,dropaddress,pickuptime,pickupdate):
         del conn
 
 
-def allTrip():
+def allTrip(cid):
+    conn = None
+    sql = """SELECT * from allbooking WHERE cid = %s"""
+    records = None
+    values = (cid,)
+    try:
+        #connect
+        conn = mysql.connector.connect(host='localhost', user='root', password='', database='taxi')
+        cursor = conn.cursor()
+        cursor.execute(sql,values)
+        records = cursor.fetchall()
+        print(records)
+        #close
+        cursor.close()
+        conn.close()
+        print("Records retrieve sucessfully")
+    except:
+        print("Error: ", sys.exc_info())
+    finally:
+        del conn
+        return records
+
+def all():
     conn = None
     sql = """SELECT * from allbooking"""
     records = None
@@ -52,6 +76,7 @@ def allTrip():
         del conn
         return records
 
+
 def searchTrip(tno):
         conn = None
         sql = """SELECT * FROM  booking where tid = %s and status!= 'cancelled' """
@@ -59,7 +84,7 @@ def searchTrip(tno):
         trip = None
         try:
             conn = mysql.connector.connect(host='localhost', user='root', password='', port="3306",
-                                           database='taxibookingsystem')
+                                           database='taxi')
             cursor = conn.cursor()
             cursor.execute(sql, values)
             trip = cursor.fetchall()
@@ -117,12 +142,12 @@ def cancelTrip(tripInfo):
 
 def deleteTrip(tid):
         conn = None
-        sql = """UPDATE booking SET status ='cancelled' WHERE tid=%s"""
+        sql = """Delete from  allbooking  WHERE tid=%s"""
         values = (tid,)
         result = False
         try:
             conn = mysql.connector.connect(host='localhost', user='root', password='', port="3306",
-                                           database='taxibookingsystem')
+                                           database='taxi')
             cursor = conn.cursor()
             cursor.execute(sql, values)
             conn.commit()

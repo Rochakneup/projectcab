@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from booking.bookingdatabae import allTrip
+from booking.bookingdatabae import all
 
 
 class viewallbookings():
@@ -9,7 +9,7 @@ class viewallbookings():
         window.geometry("700x400")
         window.configure(bg='#6C8A9B')
 
-        trips = allTrip()
+        trips = all()
 
         tableFrame = Frame(window)
         tableFrame.place(x=50, y=60)

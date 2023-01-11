@@ -6,6 +6,7 @@ from login.uilogindriver import driverlogin
 from admin.adminlogin import adminui
 
 
+
 # WHITE = F9F5EF
     # RED = FD6574
 
@@ -17,11 +18,11 @@ myImg = ImageTk.PhotoImage(Image.open("taxi1.jpg"))
 mylabel = Label(image=myImg)
 mylabel.pack()
 
-taxitxt = Label(window,text="CAB_MANDU",font= ("comicsansm",40,"bold"),bg="#6C8A9B",fg="#F9F5EF")
-taxitxt.place(x=150,y=1)
+taxitxt = Label(window,text="CAB_MANDU",font= ("comicsansm",35,"bold"),fg="black")
+taxitxt.place(x=1,y=0,width=700)
 #driver
-txtDriver = Label(window,text=""" DRIVER """,font= ("comicsansm",15,"bold"),bg="lightslategrey",fg="#F9F5EF")
-txtDriver.place(x=10,y=70)
+txtDriver = Label(window,text=""" DRIVER """,font= ("comicsansm",15,"bold"),bg="black",fg="#F9F5EF")
+txtDriver.place(x=10,y=180)
 def gotosignindriver():
     window.destroy()
     from driver.driverui import driverui
@@ -32,24 +33,24 @@ def gotosigninuser():
     from user.signinui import uisingnup
     uisingnup.__init__(self=window)
 
-btnSignupd = Button(window, text="Signup",bg="#FD6574",command=gotosignindriver)
-btnSignupd.place(x=20, y=100)
+btnSignupd = Button(window, text="Signup",bg="white",command=gotosignindriver)
+btnSignupd.place(x=10, y=225)
 
 #user
-txtUser = Label(window,text="""FIND A RIDE  """,font= ("comicsansm",15,"bold"),bg="lightslategrey",fg="#F9F5EF")
-txtUser.place(x=300,y=70)
-btnSignupc = Button(window, text="Signup",bg="#FD6574", command=gotosigninuser)
-btnSignupc.place(x=325, y=100)
+txtUser = Label(window,text=""" FIND A RIDE """,font= ("comicsansm",15,"bold"),bg="black",fg="#F9F5EF")
+txtUser.place(x=300,y=180)
+btnSignupc = Button(window, text="Signup",bg="white", command=gotosigninuser)
+btnSignupc.place(x=300, y=225)
 # login
-btndLogin = Button(window, text="Login",bg="#FD6574",command=driverlogin)
-btndLogin.place(x=100, y=100)
-btnLogin = Button(window, text="Login",bg="#FD6574",command=login)
-btnLogin.place(x=400, y=100)
+btndLogin = Button(window, text="Login",bg="white",command=driverlogin)
+btndLogin.place(x=80, y=225)
+btnLogin = Button(window, text="Login",bg="white",command=login)
+btnLogin.place(x=380, y=225)
 #admin
-txtAdmin = Label(window,text="""ADMIN  """,font= ("comicsansm",15,"bold"),bg="lightslategrey",fg="#F9F5EF")
-txtAdmin.place(x=600,y=70)
-btnloginad = Button(window, text="login",bg="#FD6574", command=adminui)
-btnloginad.place(x=605, y=100)
+txtAdmin = Label(window,text=""" ADMIN """,font= ("comicsansm",15,"bold"),bg="black",fg="#F9F5EF")
+txtAdmin.place(x=600,y=180)
+btnloginad = Button(window, text="Login",bg="white", command=adminui)
+btnloginad.place(x=625, y=225)
 
 
 

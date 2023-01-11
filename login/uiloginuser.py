@@ -1,11 +1,12 @@
 from tkinter import *
 from tkinter import Checkbutton
-
+from PIL import ImageTk,Image
 from tkinter import messagebox
 import Global
 from user.signup import Signup
 from user.datauser import searchUSER
 from welcome.welcomeui import windowTrip
+import tkinter as tk
 class login():
     def __init__(self):
         def show_password():
@@ -34,23 +35,34 @@ class login():
         window = Tk()
         window.title("Login")
         window.geometry("700x400")
-        window.configure(bg='#6C8A9B')
+        window.configure(bg='white')
+        tmpImage = Image.open('login1.jpg')
+        imgFile = ImageTk.PhotoImage(tmpImage)
+        imgFile_lbl = Label(window, image=imgFile)
+        imgFile_lbl.image = imgFile
+        imgFile_lbl.place(x=1, y=1)
+        frame = Frame(window)
+        frame.configure(bg="grey")
+        frame.place(x=100, y=50)
+        frame.configure(width=500, height=300)
 
-        txtLogin = Label(window,text="LOGIN  ",font= ("comicsansm",40,"bold"),bg="#6C8A9B",fg="#F9F5EF")
-        txtLogin.place(x=250,y=1)
-        mail = Entry (window,width=20)
-        mail.place(x=350,y=100)
-        password = Entry(window, width=20,show="*")
-        password.place(x=350, y=150)
-        lblgmail = Label(window,text="EMAIL",bg="#FD6574")
-        lblgmail.place(x=250,y=100)
-        lblpassword = Label(window, text="PASSWORD", bg="#FD6574")
-        lblpassword.place(x=250, y=150)
-        savebtn=Button(window,text="LogIn",bg="#FD6574", command=logfun)
-        savebtn.place(x=350,y=200)
 
-        passshow = Checkbutton(window,text="show password",command=show_password,bg="#6C8A9B")
-        passshow.place(x=500,y=150)
+
+        txtLogin = Label(window,text="LOGIN  ",font= ("comicsansm",30,"bold"),bg="grey",fg="black")
+        txtLogin.place(x=300,y=50)
+        mail = Entry (window,width=30,)
+        mail.place(x=300,y=150,height=25)
+        password = Entry(window, width=30,show="*")
+        password.place(x=300, y=200,height=25)
+        lblgmail = Label(window,text="EMAIL",font= ("comicsansm",20,"bold") ,bg="grey")
+        lblgmail.place(x=110,y=150)
+        lblpassword = Label(window, text="PASSWORD",font= ("comicsansm",20,"bold"), bg="grey")
+        lblpassword.place(x=110, y=200)
+        savebtn=Button(window,text="LogIn",bg="black", command=logfun,fg="white")
+        savebtn.place(x=300,y=270,width=150,height=50)
+
+        passshow = Checkbutton(window,text="show password",command=show_password,font= ("comicsansm",10,"bold"), bg="grey")
+        passshow.place(x=400,y=240)
 
 
 
