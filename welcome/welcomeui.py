@@ -1,20 +1,19 @@
-
-
 from tkinter import messagebox
 from tkinter import *
 import Global
 from tkinter import ttk
 from tkinter import Tk, Label, Entry, Button
-
 from booking.bookingdatabae import  allTrip,bookings,updateTrip,deleteTrip
 from tkcalendar import DateEntry
+import re
 
 
 
+""" GUI page of USer to make and view booking"""
 class windowTrip():
     def __init__(self):
 
-
+            # for make booking
             def save():
                 # reading value from entry and send to library/middleware
                 pickup = txtPickup.get()
@@ -39,7 +38,7 @@ class windowTrip():
                     print("Error to insert")
 
 
-
+            # to update useers booking
             def Update():
                 pickup = txtPickup.get()
                 time = txtTime.get()
@@ -60,7 +59,7 @@ class windowTrip():
                 else:
                     messagebox.showinfo("Title", "Edit Failed")
                     print("Error to Edit")
-
+            # to cancel the booking
             def cancelBooking():
                 selected_row = tblPersons.selection()[0]
                 trip_id = tblPersons.item(selected_row)['values'][0]
@@ -71,7 +70,7 @@ class windowTrip():
                 else:
                     messagebox.showinfo("Title", "Error cancelling booking")
 
-            # Declare and Initialize
+            # GUI and table to display booking
             window = Tk()
             window.geometry("700x400")
             window.title("Insert New Trip")
@@ -90,12 +89,11 @@ class windowTrip():
             txtDate = DateEntry(window, width=20)
             txtDate.place(x=377, y=100)
 
-            btnSave = Button(window, text="Save",font=("Arial",10), bg="black", fg="white",command=save)
-            btnClose = Button(window, text="Cancel",font=("Arial",10), bg="black", fg="white",command = window.destroy)
+
+            btnClose = Button(window, text="Close",font=("Arial",10), bg="black", fg="white",command = window.destroy)
             btnedit = Button(window, text="Edit Booking",font=("Arial",10), bg="black", fg="white",command=Update)
             btnCancel = Button(window, text="Cancel Booking", font=("Arial", 10), bg="black", fg="white",command=cancelBooking)
-            # cal = DateEntry(window, width=12, year=2023, month=1, day=1, background='#4D243D', foreground='white',borderwidth=2)
-            # cal.place(x=100, y=100)
+
 
 
 
@@ -111,11 +109,11 @@ class windowTrip():
             lblDate.place(x=300, y=100)
 
 
-            btnClose.place(x=350, y=130)
-            btnSave.place(x=420, y=130)
-            btnedit.place(x=470, y=130)
-            btnCancel.place(x=150, y=130)
+            btnClose.place(x=550, y=130)
 
+            btnedit.place(x=250, y=130)
+            btnCancel.place(x=350, y=130)
+            # code to clera the entry box
             def clear():
                 txtPickup.delete(0, END)
                 txtDropoff.delete(0, END)
@@ -123,11 +121,11 @@ class windowTrip():
                 txtDate.delete(0, END)
 
             btnclear = Button(window, text="Clear", font=("Arial", 10), bg="black", fg="white", command=clear)
-            btnclear.place(x=300, y=130)
+            btnclear.place(x=470, y=130)
             cid = Global.customerAccount[0]
             trips = allTrip(cid)
 
-
+            # code to display the table of booking of user
             tableFrame = Frame(window)
             tableFrame.place(x=50, y= 160)
 
@@ -164,5 +162,22 @@ class windowTrip():
                         txtDate.insert(0, tblPersons.item(selectedItem)['values'][4])
 
             tblPersons.bind("<<TreeviewSelect>>", displaySelectedItem)
+            # validation of the entries from the user
+            def Validate():
+                validate_PickUpAddress = txtPickup.get()
+                pickupaddressRegex = re.compile(r'^[a-zA-Z0-9 ,]+$')
+                validate_PickUpTime = txtTime.get()
+                pickuptimeRegex = re.compile(r'^([01]?[0-9]|2[0-3]):[0-5][0-9] (AM|PM)$')
+                validate_DropOffAddress = txtDropoff.get()
+                dropoffaddressRegex = re.compile(r'^[a-zA-Z0-9 ,]+$')
+
+                if re.match(pickupaddressRegex, validate_PickUpAddress) and \
+                        re.match(pickuptimeRegex, validate_PickUpTime) and re.match(dropoffaddressRegex,
+                                                                                    validate_DropOffAddress):
+                    save()
+                else:
+                    messagebox.showwarning("Title", "Please enter the field correctly")
+            btnSave = Button(window, text="Book Trip", font=("Arial", 10), bg="black", fg="white", command=Validate)
+            btnSave.place(x=150, y=130)
 
             window.mainloop()

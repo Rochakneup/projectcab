@@ -30,9 +30,7 @@ class triphistory():
             tblPersons.heading('Time', text='TIME', anchor=CENTER)
             tblPersons.heading('Date', text='DATE', anchor=CENTER)
             tblPersons.heading('Payment', text='PAYMENT', anchor=CENTER)
-            # for trip in trips:
-            #     tblPersons.insert(parent='', index='end', iid=trip[0], values=(trip[0], trip[1], trip[2], trip[3], trip[4]))
-            # tblPersons.pack()
+
 
 
         displayAll()

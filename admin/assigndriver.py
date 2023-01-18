@@ -6,6 +6,7 @@ from admin.driverview import viewdriver
 from admin.assigndriver2 import assigndriver
 class driverassign():
     def __init__(self):
+            #GUI to select booking to assign a driver
 
 
             window = Tk()
@@ -14,6 +15,7 @@ class driverassign():
             window.title("Insert New Trip")
             window.configure(bg='grey')
             trips = all()
+            # frame to display table of bookings
             frame = Frame(window)
             frame.configure(bg="grey")
             frame.place(x=80, y=45)
@@ -44,13 +46,40 @@ class driverassign():
 
             lbltitle = Label(window, text='Assign Driver', font=("forte", 20,), fg='black', bg="white")
             lbltitle.place(x=250, y=5)
-
+            # button to assign driver
             btnAssignDriver = Button(window, text="Assign Driver",font=("forte", 15,),command=assigndriver)
             btnAssignDriver.place(x=250, y=345)
 
 
 
             window.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

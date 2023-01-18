@@ -2,28 +2,33 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import Checkbutton
 from driver.driverprofile import driverprofile
+from driver.signupdriver import Driversignup
+from driver.databasedriver import searchDriver
 
 import Global
-from user.signup import Signup
-from user.datauser import searchUSER
+"""Gui of driver login page"""
 class driverlogin():
+    # to hade the password
     def __init__(self):
         def show_password():
             if password.cget('show') == "*":
                 password.config(show='')
             else:
                 password.config(show='*')
+        # validation
+        def  logfun():
+            drilog1 = Driversignup(dmail = mail.get(), dpassword= password.get())
+            driver = searchDriver(drilog1)
 
-                def logfun():
-                    cuslog1 = Signup(cmail=mail.get(), cpassword=password.get())
-                    customer = searchUSER(cuslog1)
-
-                    if customer != None:
-                        Global.customerAccount = customer
-                        messagebox.showinfo("Customer Login Sucessful", "Welcome {}".format(mail.get()))
-                        window.destroy()
-                        # window = Tk()
-                        welcome()
+            if driver != None:
+                Global.driverAccount = driver
+                messagebox.showinfo("Driver Login Sucessful", "Welcome {}".format(mail.get()))
+                window.destroy()
+                # window = Tk()
+                driverprofile()
+            else:
+                messagebox.showerror("Title", "Incorrect username or password")
+        #         gui of driveer login page
         window = Tk()
         window.title("Login")
         window.geometry("700x400")
@@ -43,7 +48,7 @@ class driverlogin():
         lblgmail.place(x=110, y=150)
         lblpassword = Label(window, text="PASSWORD", font=("comicsansm", 20, "bold"), bg="grey")
         lblpassword.place(x=110, y=200)
-        savebtn = Button(window, text="LogIn", bg="black", command=driverprofile, fg="white")
+        savebtn = Button(window, text="LogIn", bg="black", command=logfun, fg="white")
         savebtn.place(x=300, y=270, width=150, height=50)
 
         passshow = Checkbutton(window, text="show password", command=show_password, font=("comicsansm", 10, "bold"),

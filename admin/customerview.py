@@ -2,12 +2,15 @@ from tkinter import *
 from tkinter import ttk
 from user.datauser import alluser
 class viewcustomer():
+    # GUi to view all customer
     def __init__(self):
         window = Tk()
         window.geometry("700x400")
-        window.configure(bg='#6C8A9B')
+        window.configure(bg='grey')
         users = alluser()
-
+        txtLogin = Label(window, text="CUSTOMERS  ", font=("comicsansm", 30, "bold"), bg="grey", fg="black")
+        txtLogin.place(x=200, y=10)
+        # frame of table to display all the users
         tableFrame = Frame(window)
         tableFrame.place(x=200, y=60)
 
@@ -29,7 +32,7 @@ class viewcustomer():
 
         for user in users :
             tblPersons.insert(parent='', index='end', iid=user[0],
-                              values=(user[0], user[1], user[2]))
+                              values=(user[1], user[2], user[3]))
         tblPersons.pack()
 
         tblPersons.bind("<<TreeviewSelect>>")

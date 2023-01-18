@@ -1,6 +1,6 @@
-
-class Driversignup():
-    def __int__(self,dname=None,dphone=None,dmail=None,dpassword=None,dliscenseno=None):
+"""get set for driver data to store and retrive from database"""
+class Driversignup:
+    def __init__(self,dname=None,dphone=None,dmail=None,dpassword=None,dliscenseno=None):
         self.dname=dname
         self.dphone = dphone
         self.dmail = dmail

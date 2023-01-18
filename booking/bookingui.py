@@ -1,5 +1,4 @@
 from tkinter import *
-from PIL import ImageTk, Image
 from booking.bookingdatabae import bookings
 #
 class booking():
@@ -62,6 +61,7 @@ class booking():
         btnedit = Button(window, text="Edit Booking", command=savebooking, font=("Times New Roman", 14),
                            bg="#FD6574", )
         btnedit.place(x=550, y=300)
+
 
 
 

@@ -1,6 +1,12 @@
 from tkinter import *
-from datauser import saveUSER
 from login.uiloginuser import login
+import mysql.connector
+from tkinter import messagebox
+import re
+from user.datauser import saveUSER
+""" Gui for user signup page"""
+
+
 class uisingnup():
     def __init__(self):
         window = Tk()
@@ -32,6 +38,37 @@ class uisingnup():
         member = Label(window, text="Already a Member?", bg='grey')
         member.place(x=250, y=270)
 
+        def save():
+            # Collecting data from the form
+            name = user.get()
+            phone_number = phone.get()
+            email = mail.get()
+            passwordd = password.get()
+
+            # Connecting to the database
+            conn = mysql.connector.connect(host='localhost', port='3306', user='root', password='',
+                                           database='taxi')
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM usersdata WHERE email=%s", (email,))
+            results = cursor.fetchall()
+
+            # Validating the form data
+            if not name or not email or not password or not phone_number:
+                messagebox.showerror("Invalid", "All fields are required")
+            elif not re.match(r"[^@]", email):
+                messagebox.showerror("Invalid", "Invalid email address")
+            elif len(phone_number) > 10:
+                messagebox.showerror("Invalid", "Mobile Number must be at least 10 characters")
+            elif len(passwordd) < 8:
+                messagebox.showerror("Invalid", "Password must be at least 8 characters")
+            elif results:
+                messagebox.showerror("Invalid", "Email already exists")
+            else:
+                print("Inserted Sucessfully!!")
+                saveUSER(name,  phone_number, email,  password)
+                messagebox.showinfo("Title", "User Registered")
+                window.destroy()
+
 
         def forget(*args):
             login()
@@ -43,20 +80,11 @@ class uisingnup():
 
 
 
-        def save():
-            # reading value from entry and send to library/middleware
-            cname = (user.get())
-            cmail = (mail.get())
-            cpassword = (password.get())
-            cphone = (phone.get())
-
-            result = saveUSER(cname, cmail, cpassword,cphone)
-            if (result == True):
-                print("Error to insert")
-            else:
-                print("Insert Sucessfully")
         savebtn=Button(window,text="Sign In",command=save,bg="black",fg="white")
         savebtn.place(x=350,y=230)
+
+
+
 
 
         window.mainloop()

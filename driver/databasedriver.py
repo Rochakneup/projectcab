@@ -1,7 +1,7 @@
 import sys
 import mysql.connector
 
-
+# function to establish a connection to the 'taxi' database
 def connect():
     conn = None
     try:
@@ -11,12 +11,12 @@ def connect():
     finally:
        return conn
 
+# function to insert data into the 'drivers' table in the 'taxi' database
 def saveDRIVER(dname,dphone,dmail,dpassword,dliscense):
     conn = None
     sql = """INSERT INTO drivers (name,phone,mail,password,licenseno) VALUES (%s, %s, %s,%s,%s)"""
     values = (dname, dphone, dmail, dpassword,dliscense)
     try:
-
         conn = connect()
         cursor = conn.cursor()
         cursor.execute(sql, values)
@@ -31,6 +31,7 @@ def saveDRIVER(dname,dphone,dmail,dpassword,dliscense):
         del sql
         del conn
 
+# function to retrieve all data from the 'drivers' table in the 'taxi' database
 def alldriver():
     conn = None
     sql = """SELECT * from drivers"""
@@ -51,3 +52,25 @@ def alldriver():
     finally:
         del conn
         return records
+
+# function to search for a specific driver in the 'drivers' table in the 'taxi' database based on email and password
+def searchDriver(customerInfo):
+    conn = None
+    sql = """SELECT * FROM  drivers where mail = %s AND password = %s """
+    values = (customerInfo.getDMAIL(), customerInfo.getDPASSWORD())
+    trip = None
+    try:
+        conn = mysql.connector.connect(host='localhost', user='root', password='', port="3306", database='taxi')
+        cursor = conn.cursor()
+        cursor.execute(sql, values)
+        trip = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        print("User searched")
+    except:
+        print("Error: ", sys.exc_info())
+    finally:
+        del values
+        del sql
+        del conn
+        return trip

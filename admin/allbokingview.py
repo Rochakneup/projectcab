@@ -2,15 +2,17 @@ from tkinter import *
 from tkinter import ttk
 from booking.bookingdatabae import all
 
-
+# gui for admin to view all booking
 class viewallbookings():
     def __init__(self):
         window = Tk()
         window.geometry("700x400")
-        window.configure(bg='#6C8A9B')
-
+        window.configure(bg='grey')
+        # label for all bookings
         trips = all()
-
+        txtLogin = Label(window, text="ALL BOOKINGS  ", font=("comicsansm", 30, "bold"), bg="grey", fg="black")
+        txtLogin.place(x=200, y=10)
+        # frame for the table to display all boking
         tableFrame = Frame(window)
         tableFrame.place(x=50, y=60)
 

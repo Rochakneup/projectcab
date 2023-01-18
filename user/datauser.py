@@ -1,7 +1,7 @@
 import sys
 import mysql.connector
 
-
+# function to connect to the mysql database
 def connect():
     conn = None
     try:
@@ -11,6 +11,7 @@ def connect():
     finally:
        return conn
 
+# function to save user data to the database
 def saveUSER(cname,cphone,cmail,cpassword):
     conn = None
     sql = """INSERT INTO usersdata (name,phone,email,password) VALUES (%s, %s, %s,%s)"""
@@ -30,6 +31,8 @@ def saveUSER(cname,cphone,cmail,cpassword):
         del values
         del sql
         del conn
+
+# function to search for user in the database
 def searchUSER(customerInfo):
     conn = None
     sql = """SELECT * FROM  usersdata where email = %s AND password = %s """
@@ -51,6 +54,7 @@ def searchUSER(customerInfo):
         del conn
         return trip
 
+# function to retrieve all user data from the database
 def alluser():
     conn = None
     sql = """SELECT * from usersdata"""

@@ -1,6 +1,11 @@
 from tkinter import *
-from driver.databasedriver import saveDRIVER
+
 from login.uilogindriver import driverlogin
+from tkinter import messagebox
+import mysql.connector
+import re
+from driver.databasedriver import saveDRIVER
+"""driver GUI for signup """
 class driverui():
     def __init__(self):
         window = Tk()
@@ -43,21 +48,41 @@ class driverui():
         loginLbl.grid(column=0, row=1)  # For underline
         loginLbl.place(x=360, y=300)
         loginLbl.bind('<Button-1>', forget)
-
-
+        # to ge data from database
         def save():
-            # reading value from entry and send to library/middleware
-            dname = (user.get())
-            dmail = (mail.get())
-            dpassword = (password.get())
-            dphone = (phone.get())
-            dliscenseno = (liscense.get())
+            name = user.get()
+            phone_number = phone.get()
+            email = mail.get()
 
-            result = saveDRIVER(dname,dmail, dpassword,dphone,dliscenseno)
-            if (result == True):
-                print("Error to insert")
+            passwordd = password.get()
+
+
+            conn = mysql.connector.connect(host='localhost', port='3306', user='root', password='',
+                                           database='taxi')
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM drivers WHERE mail=%s", (email,))
+            results = cursor.fetchall()
+
+            if not name or not email or not password or not  phone_number or not liscense:
+                messagebox.showerror("Invalid", "All fields are required")
+            elif not re.match(r"[^@]+", email):
+                messagebox.showerror("Invalid", "Invalid email address")
+            elif len(phone_number) > 10:
+                messagebox.showerror("Invalid", "Mobile Number must be at least 10 characters")
+            elif len(passwordd) < 8:
+                messagebox.showerror("Invalid", "Password must be at least 8 characters")
+            elif results:
+                messagebox.showerror("Invalid", "Email already exists")
+            elif (liscense) > 10:
+                messagebox.showerror("Invalid", "License not match")
             else:
-                print("driver added!")
+                print("Inserted Sucessfully!!")
+                saveDRIVER(name,  phone_number, email,  password)
+                messagebox.showinfo("Title", "User Registered")
+                window.destroy()
+
+
+
         savebtn=Button(window,text="Sign In",command=save,bg="black",fg="white")
         savebtn.place(x=350,y=260)
 

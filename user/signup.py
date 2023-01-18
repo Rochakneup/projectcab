@@ -1,3 +1,4 @@
+"""get set to save and get data from my sql"""
 class Signup:
     def __init__(self,cname=None,cphone=None,cmail=None,cpassword=None):
         self.cname=cname

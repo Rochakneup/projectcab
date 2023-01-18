@@ -3,7 +3,7 @@ import mysql.connector
 from booking.Connect import *
 import Global
 
-
+# Connect to the database
 def connect():
     conn = None
     try:
@@ -13,12 +13,12 @@ def connect():
     finally:
        return conn
 
+# Insert a new booking into the database
 def bookings(pickupaddress,dropaddress,pickuptime,pickupdate,cid):
     conn = None
     sql = """INSERT INTO allbooking (pickupaddress,dropaddress,pickuptime,pickupdate,Status,cid) VALUES (%s, %s, %s,%s,"Pending",%s)"""
     values = (pickupaddress,dropaddress,pickuptime,pickupdate,cid)
     try:
-
         conn = connect()
         cursor = conn.cursor()
         cursor.execute(sql, values)
@@ -32,20 +32,18 @@ def bookings(pickupaddress,dropaddress,pickuptime,pickupdate,cid):
         del sql
         del conn
 
-
+# Retrieve all trips for a specific customer from the database
 def allTrip(cid):
     conn = None
     sql = """SELECT * from allbooking WHERE cid = %s"""
     records = None
     values = (cid,)
     try:
-        #connect
         conn = mysql.connector.connect(host='localhost', user='root', password='', database='taxi')
         cursor = conn.cursor()
         cursor.execute(sql,values)
         records = cursor.fetchall()
         print(records)
-        #close
         cursor.close()
         conn.close()
         print("Records retrieve sucessfully")
@@ -55,18 +53,17 @@ def allTrip(cid):
         del conn
         return records
 
+# Retrieve all trips from the database
 def all():
     conn = None
     sql = """SELECT * from allbooking"""
     records = None
     try:
-        #connect
         conn = mysql.connector.connect(host='localhost', user='root', password='', database='taxi')
         cursor = conn.cursor()
         cursor.execute(sql)
         records = cursor.fetchall()
         print(records)
-        #close
         cursor.close()
         conn.close()
         print("Records retrieve sucessfully")
@@ -76,7 +73,7 @@ def all():
         del conn
         return records
 
-
+# Search for a specific trip in the database
 def searchTrip(tno):
         conn = None
         sql = """SELECT * FROM  booking where tid = %s and status!= 'cancelled' """

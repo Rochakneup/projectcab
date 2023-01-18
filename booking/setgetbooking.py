@@ -1,3 +1,5 @@
+
+"""set get for booking to store and retrive data """
 class allbooking:
     def __int__(self,pickupaddress=None,pickuptime=None,dropaddress=None,pickupdate=None):
         self.pickupaddress=pickupaddress
